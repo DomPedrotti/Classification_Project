@@ -12,13 +12,13 @@ def plot_bars(features, target, df):
 
     args:
         features: list of string column names
-        target: name of target variable column
+        target: string name of target variable column
         df: data frame containing feature and target columns
 
     '''
 
     # iterate through feature columns and select columns of object or integer type
-    for column in df[features].select_dtypes([object, int]).columns.tolist():\
+    for column in df[features].select_dtypes([object, int, bool]).columns.tolist():
         # check how many unique values column has, if over 5, we won't use column
         if len(df[column].unique()) <= 5:
             # build chart
@@ -31,12 +31,12 @@ def plot_violin(features, target, df):
     '''
     
     '''
-    for descrete in df[features].select_dtypes([object,int]).columns.tolist():
+    for descrete in df[features].select_dtypes([object,int, bool]).columns.tolist():
         if df[descrete].nunique() <= 5:
             for continous in df[features].select_dtypes(float).columns.tolist():
                 sns.violinplot(descrete, continous, hue=target,
                 data=df, split=True, palette=['blue','orange'])
-                plt.title(continous + 'x' + descrete)
+                plt.title(continous + ' x ' + descrete)
                 plt.ylabel(continous)
                 plt.show()
 
